@@ -28,6 +28,7 @@ public final class Coins {
         mongoDatabase = mongoClient.getDatabase(databaseName);
         mongoCollection = mongoDatabase.getCollection("coins");
         this.plugin = plugin;
+        this.plugin.getServer().getPluginManager().registerEvents(new JoinListener(this), this.plugin);
     }
 
     public EditPlayer editPlayer(Player player) {
