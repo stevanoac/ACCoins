@@ -18,9 +18,12 @@ public class JoinListener implements Listener {
     public void createDocumentOnJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
-        Document document = new Document("uuid", player.getUniqueId());
-        document.append("coins", 0);
+        Document existingDocument = coins.getPlayerDocument(player);
+        if (existingDocument == null) {
+            Document document = new Document("uuid", player.getUniqueId().toString());
+            document.append("coins", 0);
 
-        coins.getMongoCollection().insertOne(document);
+            coins.getMongoCollection().insertOne(document);
+        }
     }
 }
