@@ -32,12 +32,12 @@ public class EditPlayer {
     }
 
     public void addCoins(int coins) {
-        this.coinsAmount = this.coinsAmount + coins;
-        this.coins.getOfflinePlayerDocument(offlinePlayer).replace("coins", this.coinsAmount + coins);
+        this.coinsAmount += coins;
+        this.coins.getOfflinePlayerDocument(offlinePlayer).replace("coins", this.coinsAmount);
     }
 
     public void revokeCoins(int coins) {
-        this.coinsAmount = this.coinsAmount - coins;
-        this.coins.getOfflinePlayerDocument(offlinePlayer).replace("coins", this.coinsAmount - coins);
+        this.coinsAmount -= coins;
+        this.coins.getOfflinePlayerDocument(offlinePlayer).replace("coins", this.coinsAmount);
     }
 }
