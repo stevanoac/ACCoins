@@ -38,7 +38,7 @@ public final class Coins {
     }
 
     public Document getPlayerDocument(Player player) {
-        Document document = (Document) mongoCollection.find(new Document("UUID", player.getUniqueId())).first();
+        Document document = (Document) mongoCollection.find(new Document("uuid", player.getUniqueId())).first();
 
         if (document == null) {
             this.plugin.getServer().getConsoleSender().sendMessage(ChatColor.GOLD + "[ACCoins] " + ChatColor.RED + "Unable to find a valid document for " + player.getName() + ".");
@@ -49,7 +49,7 @@ public final class Coins {
     }
 
     public Document getOfflinePlayerDocument(OfflinePlayer player) {
-        Document document = (Document) mongoCollection.find(new Document("UUID", player.getUniqueId())).first();
+        Document document = (Document) mongoCollection.find(new Document("uuid", player.getUniqueId())).first();
 
         if (document == null) {
             this.plugin.getServer().getConsoleSender().sendMessage(ChatColor.GOLD + "[ACCoins] " + ChatColor.RED + "Unable to find a valid document for " + player.getName() + ".");
