@@ -7,7 +7,24 @@ This is a API for minecraft that I made that uses MongoDB to store and save coin
 This is practically an economy plugin but it is something that I made for personal use but can be used by anyone else.
 
 An example usage:
+
+```java
+EditPlayer editPlayer = new EditPlayer(player);
+
+//Returns the amount of coins a player has
+editPlayer.getCoins();
+
+//Set the amount of coins a player has
+editPlayer.setCoins(amount);
+
+//Adds coins to a player
+editPlayer.addCoins(amount);
+
+//Removes  coins from a player (Can be negative)
+editPlayer.revokeCoins(amount);
 ```
+
+```java
 Coins coins;
 
 @Override
