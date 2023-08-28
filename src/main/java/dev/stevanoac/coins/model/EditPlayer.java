@@ -1,6 +1,7 @@
 package dev.stevanoac.coins.model;
 
 import dev.stevanoac.coins.Coins;
+import org.bson.Document;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
@@ -22,14 +23,23 @@ public class EditPlayer {
     }
 
     public void setCoins(int coins) {
-        this.coins.getOfflinePlayerDocument(offlinePlayer).replace("coins", coins);
+        Document document = this.coins.getOfflinePlayerDocument(offlinePlayer);
+        document.replace("coins", coins);
+        this.coins.getMongoCollection().replaceOne(new Document("UUID", offlinePlayer.getUniqueId().toString()), document);
     }
 
-    public void addCoins(int coins) {
-        this.coins.getOfflinePlayerDocument(offlinePlayer).replace("coins", this.coins.getOfflinePlayerDocument(offlinePlayer).getInteger("coins"));
+    public void addCoins(int amount) {
+        Document document = coins.getOfflinePlayerDocument(offlinePlayer);
+        int newCoins = getCoins() + amount;
+        document.replace("coins", newCoins);
+        this.coins.getMongoCollection().replaceOne(new Document("UUID", offlinePlayer.getUniqueId().toString()), document);
     }
 
-    public void revokeCoins(int coins) {
-        this.coins.getOfflinePlayerDocument(offlinePlayer).replace("coins", this.coins.getOfflinePlayerDocument(offlinePlayer).getInteger("coins"));
+    public void revokeCoins(int amount) {
+        Document document = coins.getOfflinePlayerDocument(offlinePlayer);
+        int currentCoins = getCoins();
+        int newCoins = Math.max(currentCoins - amount, 0);
+        document.replace("coins", newCoins);
+        this.coins.getMongoCollection().replaceOne(new Document("UUID", offlinePlayer.getUniqueId().toString()), document);
     }
 }
