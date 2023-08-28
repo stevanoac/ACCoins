@@ -2,6 +2,7 @@
 
 [![](https://jitpack.io/v/stevanoac/Coins.svg)](https://jitpack.io/#stevanoac/Coins)
 
+
 This is a API for minecraft that I made that uses MongoDB to store and save coins for each player.
 This is practically an economy plugin but it is something that I made for personal use but can be used by anyone else.
 
