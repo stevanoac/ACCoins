@@ -29,8 +29,8 @@ Coins coins;
 
 @Override
 public void onEnable() {
-    #Replace "MONGO_URI" with your mongo uri and "MONGO_DATABASE_NAME" with your mongo database name.
-    #This should realistically be in your main class so "this" is an instance of your plugin.
+    //Replace "MONGO_URI" with your mongo uri and "MONGO_DATABASE_NAME" with your mongo database name.
+    //This should realistically be in your main class so "this" is an instance of your plugin.
     coins = new Coins("MONGO_URI", "MONGO_DATABASE_NAME", this);
 }
 
