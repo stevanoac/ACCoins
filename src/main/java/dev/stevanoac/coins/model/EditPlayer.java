@@ -6,14 +6,15 @@ import org.bukkit.entity.Player;
 
 public class EditPlayer {
     private int coinsAmount;
-    private Coins coins;
+    private final Coins coins;
     public EditPlayer(Coins coins, Player player) {
         this.coins = coins;
         if (coins.getPlayerDocument(player) == null) coinsAmount = 0;
         this.coinsAmount = coins.getPlayerDocument(player).getInteger("coins");
     }
 
-    public EditPlayer(OfflinePlayer player) {
+    public EditPlayer(Coins coins, OfflinePlayer player) {
+        this.coins = coins;
         if (coins.getOfflinePlayerDocument(player) == null) coinsAmount = 0;
         this.coinsAmount = coins.getOfflinePlayerDocument(player).getInteger("coins");
     }

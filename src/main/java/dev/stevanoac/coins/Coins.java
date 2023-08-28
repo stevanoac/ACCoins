@@ -40,7 +40,7 @@ public final class Coins {
             return null;
         }
 
-        return new EditPlayer(player);
+        return new EditPlayer(this, player);
     }
 
     public Document getPlayerDocument(Player player) {
@@ -76,7 +76,7 @@ public final class Coins {
             return null;
         }
 
-        return new EditPlayer(player);
+        return new EditPlayer(this, player);
     }
 
     public MongoClient getMongoClient() {
