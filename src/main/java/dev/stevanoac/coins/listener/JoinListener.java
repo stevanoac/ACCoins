@@ -21,7 +21,7 @@ public class JoinListener implements Listener {
 
         if (!player.hasPlayedBefore()) {
             coins.plugin.getServer().getConsoleSender().sendMessage(ChatColor.GOLD + "[ACCoins] " + ChatColor.GREEN + "Creating a new document for player " + player.getName() + ". " + ChatColor.GRAY + "(First Time Player)");
-            Document document = new Document("uuid", player.getUniqueId().toString());
+            Document document = new Document("uuid", player.getUniqueId());
             document.append("coins", 0);
 
             coins.getMongoCollection().insertOne(document);
@@ -29,7 +29,7 @@ public class JoinListener implements Listener {
 
         if (coins.getPlayerDocument(player) == null) {
             coins.plugin.getServer().getConsoleSender().sendMessage(ChatColor.GOLD + "[ACCoins] " + ChatColor.GREEN + "Creating a new document for player " + player.getName() + ".");
-            Document document = new Document("uuid", player.getUniqueId().toString());
+            Document document = new Document("uuid", player.getUniqueId());
             document.append("coins", 0);
 
             coins.getMongoCollection().insertOne(document);
