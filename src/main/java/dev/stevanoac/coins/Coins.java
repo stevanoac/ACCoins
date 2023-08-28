@@ -6,11 +6,13 @@ import com.mongodb.MongoClientURI;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import dev.stevanoac.coins.listener.JoinListener;
 import dev.stevanoac.coins.model.EditPlayer;
 import org.bson.Document;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class Coins {
@@ -90,5 +92,9 @@ public final class Coins {
 
     public MongoDatabase getMongoDatabase() {
         return mongoDatabase;
+    }
+
+    public Listener getJoinListener() {
+        return new JoinListener(this);
     }
 }
