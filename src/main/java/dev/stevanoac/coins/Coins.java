@@ -32,7 +32,7 @@ public final class Coins {
     }
 
     public EditPlayer editPlayer(Player player) {
-        BasicDBObject query = new BasicDBObject("uuid", player.getUniqueId().toString());
+        BasicDBObject query = new BasicDBObject("uuid", player.getUniqueId());
         FindIterable<Document> result = mongoCollection.find(query);
 
         if (result.first() == null) {
@@ -44,7 +44,7 @@ public final class Coins {
     }
 
     public Document getPlayerDocument(Player player) {
-        BasicDBObject query = new BasicDBObject("uuid", player.getUniqueId().toString());
+        BasicDBObject query = new BasicDBObject("uuid", player.getUniqueId());
         FindIterable<Document> result = mongoCollection.find(query);
 
         Document playerDocument = result.first();
@@ -56,7 +56,7 @@ public final class Coins {
     }
 
     public Document getOfflinePlayerDocument(OfflinePlayer player) {
-        BasicDBObject query = new BasicDBObject("uuid", player.getUniqueId().toString());
+        BasicDBObject query = new BasicDBObject("uuid", player.getUniqueId());
         FindIterable<Document> result = mongoCollection.find(query);
 
         Document playerDocument = result.first();
@@ -68,7 +68,7 @@ public final class Coins {
     }
 
     public EditPlayer editOfflinePlayer(OfflinePlayer player) {
-        BasicDBObject query = new BasicDBObject("uuid", player.getUniqueId().toString());
+        BasicDBObject query = new BasicDBObject("uuid", player.getUniqueId());
         FindIterable<Document> result = mongoCollection.find(query);
 
         if (result.first() == null) {
