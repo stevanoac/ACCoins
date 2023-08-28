@@ -6,7 +6,6 @@ import com.mongodb.MongoClientURI;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import dev.stevanoac.coins.listener.JoinListener;
 import dev.stevanoac.coins.model.EditPlayer;
 import org.bson.Document;
 import org.bukkit.ChatColor;
@@ -14,23 +13,22 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public final class Coins extends JavaPlugin {
-    private static MongoClientURI clientURI;
-    private static MongoClient mongoClient;
-    private static MongoDatabase mongoDatabase;
-    public static MongoCollection mongoCollection;
-    public static JavaPlugin plugin;
+public final class Coins {
+    private MongoClientURI clientURI;
+    private MongoClient mongoClient;
+    private MongoDatabase mongoDatabase;
+    public MongoCollection mongoCollection;
+    public JavaPlugin plugin;
 
     public Coins(String uri, String databaseName, JavaPlugin plugin) {
         clientURI = new MongoClientURI(uri);
         mongoClient = new MongoClient(clientURI);
         mongoDatabase = mongoClient.getDatabase(databaseName);
         mongoCollection = mongoDatabase.getCollection("coins");
-        Coins.plugin = plugin;
-        plugin.getServer().getPluginManager().registerEvents(new JoinListener(Coins.this), plugin);
+        this.plugin = plugin;
     }
 
-    public static EditPlayer editPlayer(Player player) {
+    public EditPlayer editPlayer(Player player) {
         BasicDBObject query = new BasicDBObject("uuid", player.getUniqueId().toString());
         FindIterable<Document> result = mongoCollection.find(query);
 
@@ -42,7 +40,7 @@ public final class Coins extends JavaPlugin {
         return new EditPlayer(player);
     }
 
-    public static Document getPlayerDocument(Player player) {
+    public Document getPlayerDocument(Player player) {
         BasicDBObject query = new BasicDBObject("uuid", player.getUniqueId().toString());
         FindIterable<Document> result = mongoCollection.find(query);
 
@@ -54,7 +52,7 @@ public final class Coins extends JavaPlugin {
         return playerDocument;
     }
 
-    public static Document getOfflinePlayerDocument(OfflinePlayer player) {
+    public Document getOfflinePlayerDocument(OfflinePlayer player) {
         BasicDBObject query = new BasicDBObject("uuid", player.getUniqueId().toString());
         FindIterable<Document> result = mongoCollection.find(query);
 
@@ -66,7 +64,7 @@ public final class Coins extends JavaPlugin {
         return playerDocument;
     }
 
-    public static EditPlayer editOfflinePlayer(OfflinePlayer player) {
+    public EditPlayer editOfflinePlayer(OfflinePlayer player) {
         BasicDBObject query = new BasicDBObject("uuid", player.getUniqueId().toString());
         FindIterable<Document> result = mongoCollection.find(query);
 
@@ -76,17 +74,6 @@ public final class Coins extends JavaPlugin {
         }
 
         return new EditPlayer(player);
-    }
-
-    @Override
-    public void onEnable() {
-        // Plugin startup logic
-
-    }
-
-    @Override
-    public void onDisable() {
-        // Plugin shutdown logic
     }
 
     public MongoClient getMongoClient() {
