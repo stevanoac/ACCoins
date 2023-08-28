@@ -8,29 +8,24 @@ This is practically an economy plugin but it is something that I made for person
 
 An example usage:
 ```
-public final class CoinsPlugin extends JavaPlugin implements Listener {
-    Coins coins;
+Coins coins;
 
-    @Override
-    public void onEnable() {
-        String uri = "URI";
-        String database = "DATABASE_NAME";
+@Override
+public void onEnable() {
+    #Replace "MONGO_URI" with your mongo uri and "MONGO_DATABASE_NAME" with your mongo database name.
+    #This should realistically be in your main class so "this" is an instance of your plugin.
+    coins = new Coins("MONGO_URI", "MONGO_DATABASE_NAME", this);
+}
 
-        coins = new Coins(uri, database, this);
+public Coins getCoins() {
+    return coins;
+}
 
-        this.getServer().getPluginManager().registerEvents(this, this);
-    }
+@EventHandler
+public void onJoin(PlayerMoveEvent event) {
+    Player player = event.getPlayer();
 
-    @EventHandler
-    public void coinsTest(PlayerJoinEvent event) {
-        Player player = event.getPlayer();
-        player.sendMessage(ChatColor.GREEN + "This is a Coins test.");
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                player.sendMessage(ChatColor.GOLD + "You have " + coins.editPlayer(player).getCoins() + " coins!");
-            }
-        }.runTaskLater(this, 20L);
-    }
+    plugin.getCoins.editPlayer(player).addCoins(1);
+    player.sendMessage("You received 1 coin for walking! You now have " + plugin.getCoins().editPlayer(player).getCoins() + " coins!");
 }
 ```
