@@ -25,14 +25,14 @@ public class EditPlayer {
     public void setCoins(int coins) {
         Document document = this.coins.getOfflinePlayerDocument(offlinePlayer);
         document.replace("coins", coins);
-        this.coins.getMongoCollection().replaceOne(new Document("UUID", offlinePlayer.getUniqueId().toString()), document);
+        this.coins.getMongoCollection().updateOne(new Document("UUID", offlinePlayer.getUniqueId()), document);
     }
 
     public void addCoins(int amount) {
         Document document = coins.getOfflinePlayerDocument(offlinePlayer);
         int newCoins = getCoins() + amount;
         document.replace("coins", newCoins);
-        this.coins.getMongoCollection().replaceOne(new Document("UUID", offlinePlayer.getUniqueId().toString()), document);
+        this.coins.getMongoCollection().replaceOne(new Document("UUID", offlinePlayer.getUniqueId()), document);
     }
 
     public void revokeCoins(int amount) {
@@ -40,6 +40,6 @@ public class EditPlayer {
         int currentCoins = getCoins();
         int newCoins = Math.max(currentCoins - amount, 0);
         document.replace("coins", newCoins);
-        this.coins.getMongoCollection().replaceOne(new Document("UUID", offlinePlayer.getUniqueId().toString()), document);
+        this.coins.getMongoCollection().replaceOne(new Document("UUID", offlinePlayer.getUniqueId()), document);
     }
 }
