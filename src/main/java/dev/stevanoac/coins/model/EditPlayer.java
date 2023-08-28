@@ -5,39 +5,31 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 public class EditPlayer {
-    private int coinsAmount;
     private final Coins coins;
     private final OfflinePlayer offlinePlayer;
     public EditPlayer(Coins coins, Player player) {
         this.coins = coins;
         this.offlinePlayer = player;
-        if (coins.getPlayerDocument(player) == null) coinsAmount = 0;
-        this.coinsAmount = coins.getPlayerDocument(player).getInteger("coins");
     }
 
     public EditPlayer(Coins coins, OfflinePlayer player) {
         this.coins = coins;
         this.offlinePlayer = player;
-        if (coins.getOfflinePlayerDocument(player) == null) coinsAmount = 0;
-        this.coinsAmount = coins.getOfflinePlayerDocument(player).getInteger("coins");
     }
 
     public int getCoins() {
-        return coinsAmount;
+        return coins.getOfflinePlayerDocument(offlinePlayer).getInteger("coins");
     }
 
     public void setCoins(int coins) {
-        this.coinsAmount = coins;
         this.coins.getOfflinePlayerDocument(offlinePlayer).replace("coins", coins);
     }
 
     public void addCoins(int coins) {
-        this.coinsAmount += coins;
-        this.coins.getOfflinePlayerDocument(offlinePlayer).replace("coins", this.coinsAmount);
+        this.coins.getOfflinePlayerDocument(offlinePlayer).replace("coins", this.coins.getOfflinePlayerDocument(offlinePlayer).getInteger("coins"));
     }
 
     public void revokeCoins(int coins) {
-        this.coinsAmount -= coins;
-        this.coins.getOfflinePlayerDocument(offlinePlayer).replace("coins", this.coinsAmount);
+        this.coins.getOfflinePlayerDocument(offlinePlayer).replace("coins", this.coins.getOfflinePlayerDocument(offlinePlayer).getInteger("coins"));
     }
 }
