@@ -32,7 +32,7 @@ public class EditPlayer {
         Document document = coins.getOfflinePlayerDocument(offlinePlayer);
         int newCoins = getCoins() + amount;
         document.replace("coins", newCoins);
-        this.coins.getMongoCollection().replaceOne(new Document("UUID", offlinePlayer.getUniqueId()), document);
+        this.coins.getMongoCollection().updateOne(new Document("UUID", offlinePlayer.getUniqueId()), document);
     }
 
     public void revokeCoins(int amount) {
@@ -40,6 +40,6 @@ public class EditPlayer {
         int currentCoins = getCoins();
         int newCoins = Math.max(currentCoins - amount, 0);
         document.replace("coins", newCoins);
-        this.coins.getMongoCollection().replaceOne(new Document("UUID", offlinePlayer.getUniqueId()), document);
+        this.coins.getMongoCollection().updateOne(new Document("UUID", offlinePlayer.getUniqueId()), document);
     }
 }
