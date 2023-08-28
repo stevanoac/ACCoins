@@ -2,6 +2,7 @@ package dev.stevanoac.coins.listener;
 
 import dev.stevanoac.coins.Coins;
 import org.bson.Document;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -20,7 +21,8 @@ public class JoinListener implements Listener {
 
         Document existingDocument = coins.getPlayerDocument(player);
         if (existingDocument == null) {
-            Document document = new Document("uuid", player.getUniqueId().toString());
+            coins.plugin.getServer().getConsoleSender().sendMessage(ChatColor.GOLD + "[ACCoins] " + ChatColor.GREEN + "Creating a new document for player " + player.getName() + ".");
+            Document document = new Document("UUID", player.getUniqueId().toString());
             document.append("coins", 0);
 
             coins.getMongoCollection().insertOne(document);

@@ -1,9 +1,7 @@
 package dev.stevanoac.coins;
 
-import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
-import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import dev.stevanoac.coins.listener.JoinListener;
@@ -32,51 +30,33 @@ public final class Coins {
     }
 
     public EditPlayer editPlayer(Player player) {
-        BasicDBObject query = new BasicDBObject("uuid", player.getUniqueId());
-        FindIterable<Document> result = mongoCollection.find(query);
+        return new EditPlayer(this, player);
+    }
 
-        if (result.first() == null) {
-            plugin.getServer().getConsoleSender().sendMessage(ChatColor.GOLD + "[ACCoins] " + ChatColor.RED + "The first document for player " + player.getName() + " has returned null. It could be that there is no document for this player.");
-            return null;
-        }
-
+    public EditPlayer editOfflinePlayer(OfflinePlayer player) {
         return new EditPlayer(this, player);
     }
 
     public Document getPlayerDocument(Player player) {
-        BasicDBObject query = new BasicDBObject("uuid", player.getUniqueId());
-        FindIterable<Document> result = mongoCollection.find(query);
+        Document document = (Document) mongoCollection.find(new Document("UUID", player.getUniqueId())).first();
 
-        Document playerDocument = result.first();
-        if (playerDocument == null) {
-            plugin.getServer().getConsoleSender().sendMessage(ChatColor.GOLD + "[ACCoins] " + ChatColor.RED + "The document for player " + player.getName() + " was not found.");
-        }
-
-        return playerDocument;
-    }
-
-    public Document getOfflinePlayerDocument(OfflinePlayer player) {
-        BasicDBObject query = new BasicDBObject("uuid", player.getUniqueId());
-        FindIterable<Document> result = mongoCollection.find(query);
-
-        Document playerDocument = result.first();
-        if (playerDocument == null) {
-            plugin.getServer().getConsoleSender().sendMessage(ChatColor.GOLD + "[ACCoins] " + ChatColor.RED + "The document for player " + player.getName() + " was not found.");
-        }
-
-        return playerDocument;
-    }
-
-    public EditPlayer editOfflinePlayer(OfflinePlayer player) {
-        BasicDBObject query = new BasicDBObject("uuid", player.getUniqueId());
-        FindIterable<Document> result = mongoCollection.find(query);
-
-        if (result.first() == null) {
-            plugin.getServer().getConsoleSender().sendMessage(ChatColor.GOLD + "[ACCoins] " + ChatColor.RED + "The first document for player " + player.getName() + " has returned null. It could be that there is no document for this player.");
+        if (document == null) {
+            this.plugin.getServer().getConsoleSender().sendMessage(ChatColor.GOLD + "[ACCoins] " + ChatColor.RED + "Unable to find a valid document for " + player.getName() + ".");
             return null;
         }
 
-        return new EditPlayer(this, player);
+        return document;
+    }
+
+    public Document getOfflinePlayerDocument(OfflinePlayer player) {
+        Document document = (Document) mongoCollection.find(new Document("UUID", player.getUniqueId())).first();
+
+        if (document == null) {
+            this.plugin.getServer().getConsoleSender().sendMessage(ChatColor.GOLD + "[ACCoins] " + ChatColor.RED + "Unable to find a valid document for " + player.getName() + ".");
+            return null;
+        }
+
+        return document;
     }
 
     public MongoClient getMongoClient() {
