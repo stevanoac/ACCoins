@@ -8,6 +8,7 @@ public class EditPlayer {
     private int coinsAmount;
     private Coins coins;
     public EditPlayer(Coins coins, Player player) {
+        this.coins = coins;
         if (coins.getPlayerDocument(player) == null) coinsAmount = 0;
         this.coinsAmount = coins.getPlayerDocument(player).getInteger("coins");
     }
